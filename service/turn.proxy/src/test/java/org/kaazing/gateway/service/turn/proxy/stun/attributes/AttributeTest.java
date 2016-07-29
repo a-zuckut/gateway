@@ -17,6 +17,8 @@ package org.kaazing.gateway.service.turn.proxy.stun.attributes;
 
 import static org.kaazing.gateway.service.turn.proxy.stun.StunAttributeFactory.CredentialType.SHORT_TERM;
 import static org.kaazing.gateway.service.turn.proxy.stun.attributes.AttributeType.ALTERNATE_SERVER;
+import static org.kaazing.gateway.service.turn.proxy.stun.attributes.AttributeType.CHANNEL_NUMBER;
+import static org.kaazing.gateway.service.turn.proxy.stun.attributes.AttributeType.DATA;
 import static org.kaazing.gateway.service.turn.proxy.stun.attributes.AttributeType.DONT_FRAGMENT;
 import static org.kaazing.gateway.service.turn.proxy.stun.attributes.AttributeType.EVEN_PORT;
 import static org.kaazing.gateway.service.turn.proxy.stun.attributes.AttributeType.FINGERPRINT;
@@ -317,7 +319,7 @@ public class AttributeTest {
 
     @Test
     public void channelNumber() {
-        short type = LIFETIME.getType();
+        short type = CHANNEL_NUMBER.getType();
         short exampleChannelNumber = 3000;
         byte[] channelNumber = {0x0b, (byte) 0xb8}; 
         short length = 2;
@@ -393,7 +395,14 @@ public class AttributeTest {
 
     @Test
     public void data() {
-        Assume.assumeTrue("Not implemented", true);
+        short type = DATA.getType();
+        byte[] data = new byte[] {0x00, 0x00, 0x00, 0x00};
+        short length = (short) data.length;
+        
+        Attribute attr = new Data(data);
+        Assert.assertEquals(attr.getLength(), length);
+        Assert.assertEquals(attr.getType(), type);
+        Assert.assertTrue(Arrays.equals(attr.getVariable(), data));
     }
 
     @Test

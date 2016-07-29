@@ -15,41 +15,33 @@
  */
 package org.kaazing.gateway.service.turn.proxy.stun.attributes;
 
-import static org.kaazing.gateway.service.turn.proxy.stun.attributes.AttributeType.CHANNEL_NUMBER;
-
-import java.nio.ByteBuffer;
-
-import javax.print.DocFlavor.CHAR_ARRAY;
+import static org.kaazing.gateway.service.turn.proxy.stun.attributes.AttributeType.DATA;
 
 /**
  * TURN Even Port attribute as described in https://tools.ietf.org/html/rfc5766#section-14.6.
  *
  */
-public class ChannelNumber extends Attribute {
+public class Data extends Attribute {
 
     private byte[] value;
 
-    public ChannelNumber(byte[] value) {
+    public Data(byte[] value) {
         this.value = value;
     }
 
     @Override
     public short getType() {
-        return CHANNEL_NUMBER.getType();
+        return DATA.getType();
     }
 
     @Override
     public short getLength() {
-        return 2;
+        return (short) value.length;
     }
 
     @Override
     public byte[] getVariable() {
         return value;
-    }
-
-    public short getChannelNumber() {
-        return ByteBuffer.wrap(value).getShort();
     }
 
 }

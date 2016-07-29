@@ -37,6 +37,7 @@ public enum AttributeType {
     CHANNEL_NUMBER("CHANNEL-NUMBER",            (short) 0x000C),
     LIFETIME("LIFETIME",                        (short) 0x000D),
     XOR_PEER_ADDRESS("XOR-PEER-ADDRESS",        (short) 0x0012),
+    DATA("DATA",                                (short) 0x0013),
     REALM("REALM",                              (short) 0x0014),
     NONCE("NONCE",                              (short) 0x0015),
     XOR_RELAY_ADDRESS("XOR-PEER-ADDRESS",       (short) 0x0016),
@@ -89,6 +90,8 @@ public enum AttributeType {
             return ERROR_CODE;
         case 0x0012:
             return XOR_PEER_ADDRESS;
+        case 0x0013:
+            return DATA;
         case 0x000A:
             return UNKNOWN_ATTRIBUTES;
         case 0x000B:
