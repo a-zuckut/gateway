@@ -16,11 +16,17 @@
 package org.kaazing.gateway.service.turn.proxy.stun.attributes;
 
 import static org.kaazing.gateway.service.turn.proxy.stun.StunAttributeFactory.CredentialType.SHORT_TERM;
+import static org.kaazing.gateway.service.turn.proxy.stun.attributes.AttributeType.DONT_FRAGMENT;
 import static org.kaazing.gateway.service.turn.proxy.stun.attributes.AttributeType.EVEN_PORT;
 import static org.kaazing.gateway.service.turn.proxy.stun.attributes.AttributeType.FINGERPRINT;
+import static org.kaazing.gateway.service.turn.proxy.stun.attributes.AttributeType.LIFETIME;
 import static org.kaazing.gateway.service.turn.proxy.stun.attributes.AttributeType.MAPPED_ADDRESS;
 import static org.kaazing.gateway.service.turn.proxy.stun.attributes.AttributeType.MESSAGE_INTEGRITY;
+import static org.kaazing.gateway.service.turn.proxy.stun.attributes.AttributeType.NONCE;
+import static org.kaazing.gateway.service.turn.proxy.stun.attributes.AttributeType.REALM;
 import static org.kaazing.gateway.service.turn.proxy.stun.attributes.AttributeType.RESERVATION_TOKEN;
+import static org.kaazing.gateway.service.turn.proxy.stun.attributes.AttributeType.SOFTWARE;
+import static org.kaazing.gateway.service.turn.proxy.stun.attributes.AttributeType.USERNAME;
 import static org.kaazing.gateway.service.turn.proxy.stun.attributes.AttributeType.XOR_MAPPED_ADDRESS;
 import static org.kaazing.gateway.service.turn.proxy.stun.attributes.AttributeType.XOR_PEER_ADDRESS;
 import static org.kaazing.gateway.service.turn.proxy.stun.attributes.AttributeType.XOR_RELAY_ADDRESS;
@@ -121,7 +127,17 @@ public class AttributeTest {
 
     @Test
     public void username() {
-        Assume.assumeTrue("Not implemented", true);
+        short type = USERNAME.getType();
+        String exampleUsername = "joe";
+        byte[] username = exampleUsername.getBytes();
+        short length = (short) username.length;
+        
+        Attribute attr = new Username(username);
+        Assert.assertEquals(attr.getLength(), length);
+        Assert.assertEquals(attr.getType(), type);
+        Assert.assertTrue(Arrays.equals(attr.getVariable(), username));
+        
+        Assert.assertEquals(((Username)attr).getUsername(), exampleUsername);
     }
 
     @Test
@@ -159,13 +175,33 @@ public class AttributeTest {
     }
 
     @Test
-    public void relam() {
-        Assume.assumeTrue("Not implemented", true);
+    public void realm() {
+        short type = REALM.getType();
+        String exampleRealm = "example.com";
+        byte[] realm = exampleRealm.getBytes();
+        short length = (short) realm.length;
+        
+        Attribute attr = new Realm(realm);
+        Assert.assertEquals(attr.getLength(), length);
+        Assert.assertEquals(attr.getType(), type);
+        Assert.assertTrue(Arrays.equals(attr.getVariable(), realm));
+        
+        Assert.assertEquals(((Realm)attr).getRealm(), exampleRealm);
     }
 
     @Test
     public void nonce() {
-        Assume.assumeTrue("Not implemented", true);
+        short type = NONCE.getType();
+        String exampleNonce = "adl7W7PeDU4hKE72jdaQvbAMcr6h39sm";
+        byte[] nonce = exampleNonce.getBytes();
+        short length = (short) nonce.length;
+        
+        Attribute attr = new Nonce(nonce);
+        Assert.assertEquals(attr.getLength(), length);
+        Assert.assertEquals(attr.getType(), type);
+        Assert.assertTrue(Arrays.equals(attr.getVariable(), nonce));
+        
+        Assert.assertEquals(((Nonce)attr).getNonce(), exampleNonce);
     }
 
     @Test
@@ -217,11 +253,22 @@ public class AttributeTest {
 
     @Test
     public void software() {
-        Assume.assumeTrue("Not implemented", true);
+        short type = SOFTWARE.getType();
+        String exampleSoftware = "Manufacturer: version";
+        byte[] software = exampleSoftware.getBytes();
+        short length = (short) software.length;
+        
+        Attribute attr = new Software(software);
+        Assert.assertEquals(attr.getLength(), length);
+        Assert.assertEquals(attr.getType(), type);
+        Assert.assertTrue(Arrays.equals(attr.getVariable(), software));
+        
+        Assert.assertEquals(((Software)attr).getSoftware(), exampleSoftware);
     }
 
     @Test
     public void alternativeServer() {
+        // TODO Implementation for both IPv4 and IPv6 sample class created.
         Assume.assumeTrue("Not implemented", true);
     }
 
@@ -247,12 +294,32 @@ public class AttributeTest {
 
     @Test
     public void channelNumber() {
-        Assume.assumeTrue("Not implemented", true);
+        short type = LIFETIME.getType();
+        short exampleChannelNumber = 3000;
+        byte[] channelNumber = {0x0b, (byte) 0xb8}; 
+        short length = 2;
+        
+        Attribute attr = new ChannelNumber(channelNumber);
+        Assert.assertEquals(attr.getLength(), length);
+        Assert.assertEquals(attr.getType(), type);
+        Assert.assertTrue(Arrays.equals(attr.getVariable(), channelNumber));
+        
+        Assert.assertEquals(((ChannelNumber)attr).getChannelNumber(), exampleChannelNumber);
     }
 
     @Test
     public void lifetime() {
-        Assume.assumeTrue("Not implemented", true);
+        short type = LIFETIME.getType();
+        int exampleLifetime = 3600;
+        byte[] lifetime = new byte[] {0x00, 0x00, 0x0e, 0x10};
+        short length = 4;
+        
+        Attribute attr = new Lifetime(lifetime);
+        Assert.assertEquals(attr.getLength(), length);
+        Assert.assertEquals(attr.getType(), type);
+        Assert.assertTrue(Arrays.equals(attr.getVariable(), lifetime));
+        
+        Assert.assertEquals(((Lifetime)attr).getLifetime(), exampleLifetime);
     }
 
     @Test
@@ -381,7 +448,14 @@ public class AttributeTest {
 
     @Test
     public void dontFragment() {
-        Assume.assumeTrue("Not implemented", true);
+        short type = DONT_FRAGMENT.getType();
+        short length = 0;
+        byte[] data = new byte[0];
+
+        Attribute attr = new DontFragment(data);
+        Assert.assertEquals(attr.getLength(), length);
+        Assert.assertEquals(attr.getType(), type);
+        Assert.assertTrue(Arrays.equals(attr.getVariable(), data));
     }
 
     @Test

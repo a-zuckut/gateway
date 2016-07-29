@@ -34,11 +34,14 @@ public enum AttributeType {
     ERROR_CODE("ERROR-CODE",                    (short) 0x0009),
     UNKNOWN_ATTRIBUTES("UNKNOWN-ATTRIBUTES",    (short) 0x000A),
     RESERVED7("was REFLECTED-FROM",             (short) 0x000B),
+    CHANNEL_NUMBER("CHANNEL-NUMBER",            (short) 0x000C),
+    LIFETIME("LIFETIME",                        (short) 0x000D),
     XOR_PEER_ADDRESS("XOR-PEER-ADDRESS",        (short) 0x0012),
     REALM("REALM",                              (short) 0x0014),
     NONCE("NONCE",                              (short) 0x0015),
     XOR_RELAY_ADDRESS("XOR-PEER-ADDRESS",       (short) 0x0016),
     EVEN_PORT("EVEN-PORT",                      (short) 0x0018),
+    DONT_FRAGMENT("DONT-FRAGMENT",              (short) 0x001A),
     XOR_MAPPED_ADDRESS("XOR-MAPPED-ADDRESS",    (short) 0x0020),
     RESERVATION_TOKEN("RESERVATION-TOKEN",      (short) 0x0022),
     SOFTWARE("SOFTWARE",                        (short) 0x8022),
@@ -90,6 +93,10 @@ public enum AttributeType {
             return UNKNOWN_ATTRIBUTES;
         case 0x000B:
             return RESERVED7;
+        case 0x000C:
+            return CHANNEL_NUMBER;
+        case 0x000D:
+            return LIFETIME;
         case 0x0014:
             return REALM;
         case 0x0015:
@@ -98,6 +105,8 @@ public enum AttributeType {
             return XOR_RELAY_ADDRESS;
         case 0x0018:
             return EVEN_PORT;
+        case 0x001A:
+            return DONT_FRAGMENT;
         case 0x0020:
             return XOR_MAPPED_ADDRESS;
         case 0x0022:
