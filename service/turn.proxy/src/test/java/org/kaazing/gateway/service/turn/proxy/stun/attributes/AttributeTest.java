@@ -16,6 +16,7 @@
 package org.kaazing.gateway.service.turn.proxy.stun.attributes;
 
 import static org.kaazing.gateway.service.turn.proxy.stun.StunAttributeFactory.CredentialType.SHORT_TERM;
+import static org.kaazing.gateway.service.turn.proxy.stun.attributes.AttributeType.ALTERNATE_SERVER;
 import static org.kaazing.gateway.service.turn.proxy.stun.attributes.AttributeType.DONT_FRAGMENT;
 import static org.kaazing.gateway.service.turn.proxy.stun.attributes.AttributeType.EVEN_PORT;
 import static org.kaazing.gateway.service.turn.proxy.stun.attributes.AttributeType.FINGERPRINT;
@@ -265,11 +266,33 @@ public class AttributeTest {
         
         Assert.assertEquals(((Software)attr).getSoftware(), exampleSoftware);
     }
+    
+    @Test
+    public void alternateServerIpv4() {
+        short type = ALTERNATE_SERVER.getType();
+        short length = 4 + (32 / 8);
+        ByteBuffer buf = constructBytesAddress((byte) 0x01, (short) 8080, IPV4_ADDR_1);
+
+        Attribute attr = new AlternateServer(buf.array());
+        Assert.assertEquals(attr.getLength(), length);
+        Assert.assertEquals(attr.getType(), type);
+        Assert.assertTrue(Arrays.equals(attr.getVariable(), buf.array()));
+
+        Assert.assertEquals(((AlternateServer)(attr)).getLength(), length);
+
+    }
 
     @Test
-    public void alternativeServer() {
-        // TODO Implementation for both IPv4 and IPv6 sample class created.
-        Assume.assumeTrue("Not implemented", true);
+    public void alternateServerIpv6() {
+        short type = ALTERNATE_SERVER.getType();
+        short length = 4 + (128 / 8);
+        ByteBuffer buf = constructBytesAddress((byte) 0x02, (short) 8080, IPV6_ADDR_1);
+
+        Attribute attr = new AlternateServer(buf.array());
+        Assert.assertEquals(attr.getLength(), length);
+        Assert.assertEquals(attr.getType(), type);
+        Assert.assertTrue(Arrays.equals(attr.getVariable(), buf.array()));
+
     }
 
     @Test
